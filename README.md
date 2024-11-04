@@ -38,8 +38,7 @@ Menjalankan perintah di terminal dengan menggunakan composer
 
 #### Membuat Database Baru penilaian_siswa
 ```bash
-CREATE DATABASE penilaian_siswa CHARACTER SET utf8mb4 COLLATE
-utf8mb4_unicode_ci;
+CREATE DATABASE penilaian_siswa CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 #### Edit Environment Development Laravel
 Memberitahu Laravel bahwa kita menggunakan database MySql, nama database, username, dan password di MySql
