@@ -3,22 +3,31 @@
 
 Berikut ini dokumentasi pengerjaan pembuatan proyek "Sistem Penilaian Siswa" menggunakan Laravel. Project berisi implementasikan CRUD untuk siswa, mata pelajaran, dan nilai.
 
-![Screenshot (25)](https://github.com/user-attachments/assets/61a83278-7e15-49ee-9478-977f06b94f7f)
+### Route : /
+![Screenshot (25)](https://github.com/user-attachments/assets/aa73d9f3-0cd3-4d12-b852-75091cd2bacd)
 
+### Route : /grades/create
 ![Screenshot (26)](https://github.com/user-attachments/assets/846106d5-93ce-416a-8718-1de283f72b72)
 
+### Route : /grades/1/edit
 ![Screenshot (27)](https://github.com/user-attachments/assets/8642e65c-8199-40e1-8f3e-8a6d4872d75d)
 
+### Route : /students
 ![Screenshot (28)](https://github.com/user-attachments/assets/8bb8705e-312c-4ebe-b886-79cdc7809c89)
 
+### Route : /students/create
 ![Screenshot (29)](https://github.com/user-attachments/assets/c61bb47c-6d78-4233-a795-f6ebd3590bb3)
 
+### Route : /students/3/edit
 ![Screenshot (30)](https://github.com/user-attachments/assets/a84505e6-e720-42e4-86d4-4c0b0a435540)
 
+### Route : /subjects/create
 ![Screenshot (31)](https://github.com/user-attachments/assets/3a474962-6a39-4525-b763-d0eeef1550fa)
 
+### Route : /subjects
 ![Screenshot (32)](https://github.com/user-attachments/assets/693b13a8-d4af-4e9f-b483-844595aab161)
 
+##
 
 ### 1. Pembuatan Kerangka Kerja Proyek Dengan Laravel
 #### Membuat kerangka kerja Laravel
