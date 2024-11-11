@@ -27,6 +27,9 @@ Berikut ini dokumentasi pengerjaan pembuatan proyek "Sistem Penilaian Siswa" men
 ### Route : /subjects
 ![Screenshot (32)](https://github.com/user-attachments/assets/693b13a8-d4af-4e9f-b483-844595aab161)
 
+### Route : /subjects/4/edit
+![Screenshot (33)](https://github.com/user-attachments/assets/138c9f58-afdf-4c55-98c8-4b204851e7c1)
+
 ##
 
 ### 1. Pembuatan Kerangka Kerja Proyek Dengan Laravel
