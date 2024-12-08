@@ -7,17 +7,28 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::all();
-        return view('students.index', compact('students'));
+        // $students = Student::all();
+        $studentsByClass = [
+            '7' => Student::where('class', '7')->get(),
+            '8' => Student::where('class', '8')->get(),
+            '9' => Student::where('class', '9')->get(),
+        ];
+        return view(
+            'students.index',
+            compact('studentsByClass')
+        );
     }
 
     public function create()
     {
-        return view('students.create');
+        $classes = ['7', '8', '9'];
+        return view(
+            'students.create',
+            compact('classes')
+        );
     }
-
     public function store(Request $request)
     {
         Student::create($request->validate([
@@ -30,7 +41,8 @@ class StudentController extends Controller
 
     public function edit(Student $student)
     {
-        return view('students.edit', compact('student'));
+        $classes = ['7', '8', '9'];
+        return view('students.edit', compact(['student', 'classes']));
     }
 
     public function update(Request $request, Student $student)

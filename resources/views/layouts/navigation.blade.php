@@ -1,123 +1,147 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> -->
-    <div class="center container">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <!-- <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div> -->
+<head>
+    @section('PageTitle')
+    <title>{{ $title }} - Sistem Penilaian Siswa</title>
+    @endsection
+</head>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <!-- {{ __('Dashboard') }} -->
-                        Dashboard
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('grades.index')" :active="request()->routeIs('grades.index')">
-                        <!-- {{ __('Daftar Nilai') }} -->
-                        Daftar Nilai
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
-                        <!-- {{ __('Daftar Siswa') }} -->
-                        Daftar Siswa
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('subjects.index')" :active="request()->routeIs('subjects.index')">
-                        <!-- {{ __('Daftar Pelajaran') }} -->
-                        Daftar Pelajaran
-                    </x-nav-link>
-                </div>
-            </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+{{-- @extends('layouts.app') --}}
+<x-app-layout>
+{{-- <body>
+@section('content') --}}
+<nav x-data="{ open: false }">
+    <nav class="sb-topnav navbar navbar-expand navbar-light bg-light shadow">
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3 ps-lg-2 fs-6" href="{{ route('dashboard') }}">Sistem Penilaian Siswa</a>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto me-3">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('profile.edit') }}">Atur Profile</a>
+                    </li>
+                    
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
+                            <button type="submit" class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">Log Out</button>
                         </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-header text-center">
+                    <div class="small">masuk sebagai :</div>
+                    <div class="">{{ Auth::user()->name }}</div>
+                    <div class="small1">{{ Auth::user()->email }}</div> {{-- ms-2 --}}
+                </div>
+                <hr/>
 
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+                <div class="sb-sidenav-menu mt-4 ms-3 me-3">
+                    <div class="nav">
+                        <!-- Dashboard -->
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-house"></i></div>
+                            &nbsp;&nbsp;Dashboard
+                        </a>
+
+                        <!-- Siswa -->
+                        <a class="nav-link {{ request()->routeIs(['students.index', 'students.create', 'students.edit']) ? 'active' : '' }}" href="{{ route('students.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-people-group"></i></div>
+                            &nbsp;&nbsp;Siswa
+                        </a>
+
+                        <!-- Nilai -->
+                        <a class="nav-link {{ request()->routeIs(['grades.index', 'grades.create', 'grades.edit']) ? 'active' : '' }}" href="{{ route('grades.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
+                            &nbsp;&nbsp;Nilai
+                        </a>    
+
+                        <!-- Pelajaran -->
+
+                        {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
+                            &nbsp;&nbsp;Pelajaran
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link {{ request()->routeIs('subjects.create') ? 'active' : '' }}" href="{{ route('subjects.create') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
+                                    &nbsp;&nbsp;Pelajaran
+                                </a>
+                            </nav>
+                        </div> --}}
+                        
+                        <a class="nav-link {{ request()->routeIs(['subjects.index', 'subjects.create', 'subjects.edit']) ? 'active' : '' }}" href="{{ route('subjects.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
+                            &nbsp;&nbsp;Pelajaran
+                        </a>
+
+                        <!-- Atur Pengguna -->
+                        @if (auth()->user()->hasRole('admin'))
+                            <a class="nav-link {{ request()->routeIs(['users.index', 'users.edit']) ? 'active' : '' }}" href="{{ route('users.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-gear"></i></div>
+                                &nbsp;&nbsp;Atur Pengguna
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            
+                {{-- <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    {{ Auth::user()->name }}
+                    <div class="small1">{{ Auth::user()->email }}</div>
+                </div> --}}
+            </nav>
         </div>
-    </div>
 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
+        <div id="layoutSidenav_content">
+            <!-- Page Heading -->
+            @isset($header)
+            <div class="bg-white" style="height: 89px">
+                <header>
+                        {{ $header }}
+                </header>
+            </div>
+            <hr/>
+            @endisset
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+            <div class="">
+                <main class="bg-gray-100">
+                    {{ $slot }}
+                    {{-- {{ dump($slot) }} --}}
+                </main>
             </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Sistem Penilaian Siswa 2024</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 </nav>
+{{-- @endsection --}}
+</x-app-layout>

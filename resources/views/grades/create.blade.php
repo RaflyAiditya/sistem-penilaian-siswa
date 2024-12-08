@@ -44,7 +44,7 @@
             <!-- Input nilai -->
             <div class="mb-3">
                 <label for="grade" class="form-label">Nilai</label>
-                <input type="number" name="grade" id="grade" class="form-control" min="0" max="100"
+                <input type="number" name="grade" id="grade" class="form-control" min="0" max="100" step="0.01"
                     value="{{ old('grade') }}" required>
                 @error('grade')
                     <div class="text-danger">{{ $message }}</div>

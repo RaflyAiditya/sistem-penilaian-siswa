@@ -27,7 +27,7 @@ class GradeController extends Controller
         Grade::create($request->validate([
             'student_id' => 'required|exists:students,id',
             'subject_id' => 'required|exists:subjects,id',
-            'grade' => 'required|integer|min:0|max:100',
+            'grade' => 'required|numeric|min:0|max:100',
         ]));
         return redirect()->route('grades.index')->with('success', 'Menambahkan nilai berhasil.');
     }

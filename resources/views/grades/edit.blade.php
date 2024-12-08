@@ -15,11 +15,11 @@
                 <label for="student_id" class="form-label">Siswa</label>
                 <select name="student_id" id="student_id" class="form-control" required>
                     <option value="">Pilih Siswa</option>
-                    @foreach($students as $student)
-                        <option value="{{ $student->id }}" {{ $student->id == $grade->student_id ? 'selected' : '' }}>
-                            {{ $student->name }}
-                        </option>
-                    @endforeach
+                        @foreach($students as $student)
+                            <option value="{{ $student->id }}" {{ $student->id == $grade->student_id ? 'selected' : '' }}>
+                                {{ $student->name }}
+                            </option>
+                        @endforeach
                 </select>
                 @error('student_id')
                     <div class="text-danger">{{ $message }}</div>

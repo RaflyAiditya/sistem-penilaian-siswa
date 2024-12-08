@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout title="Register">
 
     @section('title')
     {{ "Register" }}
@@ -6,7 +6,16 @@
 
     <form method="POST" action="{{ route('register') }}">
         @csrf
-        <h3 class="text-center mb-4">Register</h3>
+        <h1 class="text-center fs-4 fw-semibold mb-1">Register</h1>
+
+        <div class="flex items-center justify-center mb-3">
+            <span>Sudah punya akun?&nbsp;</span>
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                href="{{ route('login') }}">
+                {{ __('Login') }}
+            </a>
+        </div>
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Nama')" />
@@ -43,16 +52,10 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-between mt-4">
-            <div>
-                <span>Sudah punya akun?&nbsp;</span>
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="{{ route('login') }}">
-                    {{ __('Login') }}
-                </a>
-            </div>
+        <div class="flex items-center justify-center mt-4">
 
-            <button type="submit" class="btn btn-dark">Register</button>
+
+            <button type="submit" class="btn btn-success">Register</button>
         </div>
     </form>
 </x-guest-layout>

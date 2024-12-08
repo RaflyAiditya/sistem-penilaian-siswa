@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect('login');
@@ -40,6 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/grades/{grade}/edit', [GradeController::class, 'edit'])->name('grades.edit');
     Route::put('/grades/{grade}', [GradeController::class, 'update'])->name('grades.update');
     Route::delete('/grades/{grade}', [GradeController::class, 'destroy'])->name('grades.destroy');
+});
+
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    // Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 require __DIR__ . '/auth.php';

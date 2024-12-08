@@ -12,9 +12,19 @@ class Subject extends Model
     protected $table = 'subjects';
     protected $fillable = [
         'subject_name',
-        'teacher',
+        'class',
+        'teacher_id',
+        'day',
+        'time_start',
+        'time_end',
+        
     ];
 
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+        
     public function grades()
     {
         return $this->hasMany(Grade::class);

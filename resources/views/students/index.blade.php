@@ -1,50 +1,56 @@
-<x-app-layout>
-    @section('title')
-    {{ "Daftar Siswa" }}
-    @endsection
+<x-navigation-layout title="Siswa">
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Daftar Siswa') }}
-        </h2>
+        <div class="pt-4 ps-4">
+            <h1 class="fs-5"><b>Daftar Siswa</b></h1>
+
+            <x-breadcrumb :items="[
+                ['name' => 'Home', 'url' => route('dashboard')],
+                ['name' => 'Siswa', 'url' => null]
+            ]" />
+        </div>
     </x-slot>
 
-    <div class="center container mt-4">
-        <div class="d-flex justify-end align-items-center mb-4">
-            <a href="{{ route('students.create') }}" class="btn btn-primary">Tambah Siswa</a>
-        </div>
-
+    <div class="container-fluid px-4">
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <ul class="nav nav-tabs justify-between">
+                    <ul class="nav nav-tabs justify-between" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="kelas7-tab" data-bs-toggle="tab" data-bs-target="#kelas7-tab-pane" type="button" role="tab" aria-controls="kelas7-tab-pane" aria-selected="true">Kelas 7</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="kelas8-tab" data-bs-toggle="tab" data-bs-target="#kelas8-tab-pane" type="button" role="tab" aria-controls="kelas8-tab-pane" aria-selected="false">Kelas 8</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="kelas9-tab" data-bs-toggle="tab" data-bs-target="#kelas9-tab-pane" type="button" role="tab" aria-controls="kelas9-tab-pane" aria-selected="false">Kelas 9</a>
+                        </li>
+                    </ul>
+                    <button class="d-flex justify-end mx-2 my-2">
+                        <a href="{{ route('students.create') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;tambah siswa</a>
+                    </button>
+                </ul>
+                {{-- <div class="d-flex justify-end mx-2 my-2"> --}}
+                {{-- </div> --}}
+            </div>
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Nama Siswa</th>
-                    <th>Kelas</th>
-                    <th>Email</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($students as $student)
-                    <tr>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->class }}</td>
-                        <td>{{ $student->email }}</td>
-                        <td>
-                            <a href="{{ route('students.edit', $student) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('students.destroy', $student) }}" method="POST"
-                                style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="kelas7-tab-pane" role="tabpanel" aria-labelledby="kelas7-tab" tabindex="0">
+                        @include('students.table', ['students' => $studentsByClass['7']])
+                    </div>
+                    <div class="tab-pane fade" id="kelas8-tab-pane" role="tabpanel" aria-labelledby="kelas8-tab" tabindex="0">
+                        @include('students.table', ['students' => $studentsByClass['8']])
+                    </div>
+                    <div class="tab-pane fade" id="kelas9-tab-pane" role="tabpanel" aria-labelledby="kelas9-tab" tabindex="0">
+                        @include('students.table', ['students' => $studentsByClass['9']])
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</x-app-layout>
+</x-navigation-layout>
