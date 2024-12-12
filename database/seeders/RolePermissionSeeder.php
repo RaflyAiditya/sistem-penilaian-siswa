@@ -16,37 +16,36 @@ class RolePermissionSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'add-user']);
-        Permission::create(['name' => 'view-user']);
-        Permission::create(['name' => 'edit-user']);
-        Permission::create(['name' => 'delete-user']);
+        Permission::create(['name' => 'melihat pengguna']);
+        Permission::create(['name' => 'mengelola pengguna']);
 
-        Permission::create(['name' => 'add-grade']);
-        Permission::create(['name' => 'view-grade']);
-        Permission::create(['name' => 'edit-grade']);
-        Permission::create(['name' => 'delete-grade']);
+        Permission::create(['name' => 'mengelola roles dan permissions']);
 
-        Permission::create(['name' => 'add-student']);
-        Permission::create(['name' => 'view-student']);
-        Permission::create(['name' => 'edit-student']);
-        Permission::create(['name' => 'delete-student']);
+        Permission::create(['name' => 'melihat nilai']);
+        Permission::create(['name' => 'mengelola nilai']);
 
-        Permission::create(['name' => 'add-subject']);
-        Permission::create(['name' => 'view-subject']);
-        Permission::create(['name' => 'edit-subject']);
-        Permission::create(['name' => 'delete-subject']);
+        Permission::create(['name' => 'melihat siswa']);
+        Permission::create(['name' => 'mengelola siswa']);
+
+        Permission::create(['name' => 'melihat daftar pelajaran']);
+        Permission::create(['name' => 'mengelola daftar pelajaran']);
 
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'guru']);
+        Role::create(['name' => 'user']);
 
         $roleAdmin = Role::findByName('admin');
-        $roleAdmin -> givePermissionTo(Permission::all());
+        $roleAdmin->givePermissionTo(Permission::all());
 
-        $roleAdmin = Role::findByName('guru');
-        $roleAdmin -> givePermissionTo('add-grade');
-        $roleAdmin -> givePermissionTo('view-grade');
-        $roleAdmin -> givePermissionTo('edit-grade');
-        $roleAdmin -> givePermissionTo('delete-grade');
-        
+        $roleGuru = Role::findByName('guru');
+        $roleGuru->givePermissionTo('melihat nilai');
+        $roleGuru->givePermissionTo('mengelola nilai');
+        $roleGuru->givePermissionTo('melihat siswa');
+        $roleGuru->givePermissionTo('melihat daftar pelajaran');
+
+        $roleUser = Role::findByName('user');
+        $roleUser->givePermissionTo('melihat nilai');
+        $roleUser->givePermissionTo('melihat siswa');
+        $roleUser->givePermissionTo('melihat daftar pelajaran');
     }
 }

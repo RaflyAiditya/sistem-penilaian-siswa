@@ -2,59 +2,55 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    @section('title')
-    {{ "Login" }}
-    @endsection
-
     <form method="POST" action="{{ route('login') }}">
         @csrf
-        <h1 class="text-center fs-4 fw-semibold mb-1">Login</h1>
-        
-        <div class="flex items-center justify-center mb-3">
-            <span>Belum punya akun?&nbsp;</span>
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                href="{{ route('register') }}">
-                <!-- {{ __('Register') }} -->
-                Register
-            </a>
-        </div>
-        
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <h1 class="text-center fs-4 fw-semibold">Login</h1>
+
+         <!-- Email Address -->
+        <div class="mb-3 mt-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" 
+                   placeholder="Masukkan email Anda" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" 
+                   class="form-control @error('password') is-invalid @enderror" id="password" name="password" 
+                   placeholder="Masukkan password" required autocomplete="current-password">
+            @error('password')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-between mt-3">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Ingat saya') }}</span>
-            </label> 
+        <!-- Ingat saya dan Lupa Password -->
+        <div class="d-flex justify-content-between mt-3">
+            <label for="remember_me">
+                <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
+                <span class="form-check-label" for="remember">Ingat saya</span>
+            </label>
 
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="{{ route('password.request') }}">
-                    {{ __('Lupa Password?') }}
-                </a>
+                <a href="{{ route('password.request') }}" class="text-muted">Lupa Password?</a>
             @endif
-
         </div>
 
-        <div class="flex items-center justify-center mt-4">
-            <button type="submit" class="btn btn-primary">Masuk</button>
+        <!-- Tombol masuk -->
+        <div class="row justify-content-center mt-4">
+            <button type="submit" class="btn btn-primary" style="width: 100px">Masuk</button>
+        </div>
+
+        <!-- Link daftar -->
+        <div class="text-center mt-4">
+            <p class="text-muted">Belum punya akun? <a href="{{ route('register') }}">Register</a></p>
         </div>
     </form>
 </x-guest-layout>

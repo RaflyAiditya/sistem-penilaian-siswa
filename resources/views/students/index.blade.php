@@ -1,56 +1,65 @@
 <x-navigation-layout title="Siswa">
 
     <x-slot name="header">
-        <div class="pt-4 ps-4">
-            <h1 class="fs-5"><b>Daftar Siswa</b></h1>
-
-            <x-breadcrumb :items="[
-                ['name' => 'Home', 'url' => route('dashboard')],
-                ['name' => 'Siswa', 'url' => null]
-            ]" />
-        </div>
+        <h1 class="fs-5"><b>Daftar Siswa</b></h1>
+        <x-breadcrumb :items="[
+            ['name' => 'Home', 'url' => route('dashboard')],
+            ['name' => 'Siswa', 'url' => null]
+        ]" />
     </x-slot>
 
     <div class="container-fluid px-4">
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <script>
+                window.sessionSuccessMessage = '{{ session('success') }}';
+            </script>
         @endif
-        
-        <div class="card mt-4">
+
+        <div class="card mt-4" data-page-id="students-page">
             <div class="card-header">
-                <ul class="nav nav-tabs justify-between">
-                    <ul class="nav nav-tabs justify-between" role="tablist">
+                <ul class="nav nav-tabs justify-content-between">
+                <ul class="nav nav-tabs justify-content-between" role="tablist">
+                    @foreach (['7' => 'Kelas 7', '8' => 'Kelas 8', '9' => 'Kelas 9'] as $key => $label)
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="kelas7-tab" data-bs-toggle="tab" data-bs-target="#kelas7-tab-pane" type="button" role="tab" aria-controls="kelas7-tab-pane" aria-selected="true">Kelas 7</a>
+                            <a class="nav-link {{ $loop->first ? 'active' : '' }}" 
+                                id="kelas-{{ $key }}-tab" 
+                                data-bs-toggle="tab" 
+                                data-bs-target="#kelas-{{ $key }}-tab-pane" 
+                                type="button" 
+                                role="tab" 
+                                aria-controls="kelas-{{ $key }}-tab-pane" 
+                                aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                                {{ $label }}
+                            </a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="kelas8-tab" data-bs-toggle="tab" data-bs-target="#kelas8-tab-pane" type="button" role="tab" aria-controls="kelas8-tab-pane" aria-selected="false">Kelas 8</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="kelas9-tab" data-bs-toggle="tab" data-bs-target="#kelas9-tab-pane" type="button" role="tab" aria-controls="kelas9-tab-pane" aria-selected="false">Kelas 9</a>
-                        </li>
-                    </ul>
-                    <button class="d-flex justify-end mx-2 my-2">
-                        <a href="{{ route('students.create') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;tambah siswa</a>
-                    </button>
+                    @endforeach
                 </ul>
-                {{-- <div class="d-flex justify-end mx-2 my-2"> --}}
-                {{-- </div> --}}
+                <button class="btn btn-link mx-2 mb-2" style="padding: 0%">
+                    <a href="{{ route('students.create') }}" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i>&nbsp;Tambah siswa
+                    </a>
+                </button>
             </div>
 
             <div class="card-body">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="kelas7-tab-pane" role="tabpanel" aria-labelledby="kelas7-tab" tabindex="0">
-                        @include('students.table', ['students' => $studentsByClass['7']])
-                    </div>
-                    <div class="tab-pane fade" id="kelas8-tab-pane" role="tabpanel" aria-labelledby="kelas8-tab" tabindex="0">
-                        @include('students.table', ['students' => $studentsByClass['8']])
-                    </div>
-                    <div class="tab-pane fade" id="kelas9-tab-pane" role="tabpanel" aria-labelledby="kelas9-tab" tabindex="0">
-                        @include('students.table', ['students' => $studentsByClass['9']])
-                    </div>
+                    @foreach (['7' => 'Kelas 7', '8' => 'Kelas 8', '9' => 'Kelas 9'] as $key => $label)
+                        <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" 
+                            id="kelas-{{ $key }}-tab-pane" 
+                            role="tabpanel" 
+                            aria-labelledby="kelas-{{ $key }}-tab" 
+                            tabindex="0">
+                            @if ($studentsByClass[$key]->isNotEmpty())
+                                <div class="table-responsive-lg">
+                                    @include('students.table', ['students' => $studentsByClass[$key]])
+                                </div>
+                            @else
+                                <p class="text-center">Tidak ada siswa untuk {{ $label }}.</p>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-        </div>
+            </div>     
+        </div>  
     </div>
 </x-navigation-layout>

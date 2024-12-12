@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RolePermissionController;
 
 Route::get('/', function () {
     return redirect('login');
@@ -47,11 +49,24 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-    // Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::post('/verify-password', [UserController::class, 'verifyPassword']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+});
+
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('/roles-permissions', [RolePermissionController::class, 'index'])->name('roles.index');
+    Route::post('/roles', [RolePermissionController::class, 'createRole'])->name('roles.create');
+    Route::post('/assign-permissions', [RolePermissionController::class, 'assignPermissions'])->name('roles.assign-permissions');
+});
+
+// Pastikan pengguna sudah terautentikasi
+Route::middleware('auth')->get('/permissions', function () {
+    return response()->json([
+        'permissions' => Auth::user()->getAllPermissions()->pluck('name'),
+    ]);
 });
 
 require __DIR__ . '/auth.php';
-
 
 // Route untuk Root
 // Route::get('/', [GradeController::class, 'index'])->name('layout');
