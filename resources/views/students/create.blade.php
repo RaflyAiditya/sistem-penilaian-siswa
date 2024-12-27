@@ -22,8 +22,8 @@
 
                             <div class="mb-3">
                                 <label for="class" class="form-label">Kelas</label>
-                                <select name="class" id="class" class="form-control" required>
-                                    <option value="">Pilih Kelas...</option>
+                                <select name="class" id="class" class="form-select" required>
+                                    <option selected disabled value="">Pilih Kelas...</option>
                                     {{-- @foreach($classes as $class) --}}
                                     @foreach (['7', '8', '9'] as $class)
                                         <option value="{{ $class }}" {{ old('class') == $class ? 'selected' : '' }}>
@@ -42,8 +42,8 @@
                             </div>
 
                             <div class="d-flex mt-4 justify-content-start gap-2">
-                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-circle-check"></i>&nbsp;Tambah</button>
-                                <a href="{{ route('students.index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Batal</a>
+                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Tambah</button>
+                                <a href="{{ route('students.index') }}" class="btn btn-secondary"><i class="fa-solid fa-ban"></i>&nbsp;Batal</a>
                             </div>
                         </form>
                     </div>

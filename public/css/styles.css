@@ -59,10 +59,11 @@
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-font-size: 1rem;
+  --bs-body-font-size: 0.95rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
-  --bs-body-color: #212529;
+  /* --bs-body-color: #212529; */
+  --bs-body-color: #3f4254;
   --bs-body-bg: #f4f6f9;
   --bs-border-width: 1px;
   --bs-border-style: solid;
@@ -12783,11 +12784,11 @@ body {
 }
 
 #layoutSidenav #layoutSidenav_nav {
-  flex-basis: 225px;
+  flex-basis: 240px;
   flex-shrink: 0;
   transition: transform 0.2s ease-in-out;
   z-index: 1038;
-  transform: translateX(-225px);
+  transform: translateX(-240px);
 }
 
 #layoutSidenav #layoutSidenav_content {
@@ -12798,7 +12799,7 @@ body {
   min-width: 0;
   flex-grow: 1;
   min-height: calc(100vh - 56px);
-  margin-left: -225px;
+  margin-left: -230px;
 }
 
 .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
@@ -12830,11 +12831,11 @@ body {
   }
 
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-    transform: translateX(-225px);
+    transform: translateX(-230px);
   }
 
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
-    margin-left: -225px;
+    margin-left: -230px;
   }
 
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
@@ -12847,7 +12848,7 @@ body {
 }
 
 .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
-  width: 225px;
+  width: 230px;
   height: 100vh;
   z-index: 1038;
 }
@@ -12861,7 +12862,7 @@ body {
 }
 
 .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
-  padding-left: 225px;
+  padding-left: 230px;
   top: 56px;
 }
 
@@ -12896,7 +12897,7 @@ body {
 }
 
 .sb-topnav .navbar-brand {
-  width: 225px;
+  width: 230px;
   margin: 0;
 }
 
@@ -12988,7 +12989,7 @@ body {
 .sb-sidenav .sb-sidenav-header {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  margin-left: 1.5rem;
+  margin-left: 1.2rem;
   margin-right: 1rem;
   flex-shrink: 0;
 }
@@ -13255,7 +13256,12 @@ body {
 
 footer a {
   color: inherit;
-    text-decoration: none;
+  text-decoration: none;
+}
+
+.sb-topnav button {
+  color: #4a4a4b;
+  text-decoration: none;
 }
 
 .sb-sidenav .sb-sidenav-header {
@@ -13286,4 +13292,11 @@ footer a {
 .table-group-divider-2 {
   border-top: 2px solid #ccc;
   margin-bottom: 30px;
+}
+
+.form-text {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875em;
+  transition: all 0.3s ease;
 }

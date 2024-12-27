@@ -7,13 +7,14 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:melihat siswa')->only(['index']);
+        $this->middleware('permission:mengelola siswa')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     public function index(Request $request)
     {
-        // $studentsByClass = [
-        //     '7' => Student::where('class', '7')->get(),
-        //     '8' => Student::where('class', '8')->get(),
-        //     '9' => Student::where('class', '9')->get(),
-        // ];
         $studentsByClass = collect([
             '7' => Student::where('class', '7')->get(),
             '8' => Student::where('class', '8')->get(),
@@ -24,16 +25,11 @@ class StudentController extends Controller
 
     public function create()
     {
-        // $classes = ['7', '8', '9'];
-        // return view('students.create', compact('classes'));
         return view('students.create');
     }
     public function store(Request $request)
     {
         Student::create($request->validate([
-            // 'name' => 'required|string',
-            // 'class' => 'required|string',
-            // 'email' => 'required|string',
             'name' => 'required|string|max:255',
             'class' => 'required|in:7,8,9',
             'email' => 'required|email|unique:students,email',
@@ -51,9 +47,6 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         $student->update($request->validate([
-            // 'name' => 'required|string',
-            // 'class' => 'required|string',
-            // 'email' => 'required|email',
             'name' => 'required|string|max:255',
             'class' => 'required|in:7,8,9',
             'email' => 'required|email|unique:students,email,' . $student->id,

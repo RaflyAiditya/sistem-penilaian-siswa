@@ -50,7 +50,7 @@
 
         <!-- Link daftar -->
         <div class="text-center mt-4">
-            <p class="text-muted">Belum punya akun? <a href="{{ route('register') }}">Register</a></p>
+            <p class="text-muted mb-0">Belum punya akun? <a href="{{ route('register') }}">Register</a></p>
         </div>
     </form>
 </x-guest-layout>

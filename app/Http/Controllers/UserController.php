@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:melihat pengguna')->only(['index']);
+        $this->middleware('permission:mengelola pengguna')->only(['edit', 'update', 'destroy']);
+    }
+
     public function index()
     {
         $users = User::with('roles')->get();

@@ -12,8 +12,8 @@ class SubjectController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:melihat nilai')->only(['index']);
-        $this->middleware('permission:mengelola nilai')->only(['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('permission:melihat daftar pelajaran')->only(['index']);
+        $this->middleware('permission:mengelola daftar pelajaran')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index()
@@ -25,7 +25,7 @@ class SubjectController extends Controller
             4 => 'Kamis',
             5 => 'Jumat',
         ];
-        
+
         $subjects = Subject::with(['teacher', 'subjectName'])
             ->orderBy('class', 'asc')
             ->orderBy('time_start', 'asc')
@@ -71,7 +71,7 @@ class SubjectController extends Controller
             'time_start' => 'required|date_format:H:i',
             'time_end' => 'required|date_format:H:i|after:time_start',
         ], $messages);
-        
+
         $conflict = Subject::where('teacher_id', $validated['teacher_id'])
             ->where('day', $validated['day'])
             ->where(function ($query) use ($validated) {
@@ -113,7 +113,7 @@ class SubjectController extends Controller
     {
         $subjectNames = SubjectName::all();
         $teachers = Teacher::all();
-        return view('subjects.edit', compact('subject','subjectNames', 'teachers'));
+        return view('subjects.edit', compact('subject', 'subjectNames', 'teachers'));
     }
 
     public function update(Request $request, Subject $subject)

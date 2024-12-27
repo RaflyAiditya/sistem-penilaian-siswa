@@ -13,9 +13,9 @@
             <div class="mx-4 bg-white overflow-hidden shadow-sm" style="border-radius: 10px">
             {{-- <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg"> --}}
                 <div class="p-4">
-                    {{ __("You're logged in!") }}
+                    {{ __("Anda berhasil masuk!") }}
                     <br> Hai {{ Auth::user()->name }}.
-                    Welcome to Sistem Penilaian Siswa
+                    Selamat datang di Sistem Penilaian Siswa
                 </div>
             </div>
         </div>

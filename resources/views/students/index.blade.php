@@ -17,28 +17,32 @@
 
         <div class="card mt-4" data-page-id="students-page">
             <div class="card-header">
-                <ul class="nav nav-tabs justify-content-between">
-                <ul class="nav nav-tabs justify-content-between" role="tablist">
-                    @foreach (['7' => 'Kelas 7', '8' => 'Kelas 8', '9' => 'Kelas 9'] as $key => $label)
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link {{ $loop->first ? 'active' : '' }}" 
-                                id="kelas-{{ $key }}-tab" 
-                                data-bs-toggle="tab" 
-                                data-bs-target="#kelas-{{ $key }}-tab-pane" 
-                                type="button" 
-                                role="tab" 
-                                aria-controls="kelas-{{ $key }}-tab-pane" 
-                                aria-selected="{{ $loop->first ? 'true' : 'false' }}">
-                                {{ $label }}
-                            </a>
-                        </li>
-                    @endforeach
+                <ul class="nav justify-content-between mt-2">
+                    <ul class="nav nav-tabs" role="tablist">
+                        @foreach (['7' => 'Kelas 7', '8' => 'Kelas 8', '9' => 'Kelas 9'] as $key => $label)
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link {{ $loop->first ? 'active' : '' }}" 
+                                    id="kelas-{{ $key }}-tab" 
+                                    data-bs-toggle="tab" 
+                                    data-bs-target="#kelas-{{ $key }}-tab-pane" 
+                                    type="button" 
+                                    role="tab" 
+                                    aria-controls="kelas-{{ $key }}-tab-pane" 
+                                    aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                                    {{ $label }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                    
+                    @can('mengelola siswa')
+                    <button class="btn btn-link mx-2 mb-2" style="padding: 0%">
+                        <a href="{{ route('students.create') }}" class="btn btn-primary">
+                            Tambah siswa
+                        </a>
+                    </button>
+                    @endcan
                 </ul>
-                <button class="btn btn-link mx-2 mb-2" style="padding: 0%">
-                    <a href="{{ route('students.create') }}" class="btn btn-primary">
-                        <i class="fa-solid fa-plus"></i>&nbsp;Tambah siswa
-                    </a>
-                </button>
             </div>
 
             <div class="card-body">

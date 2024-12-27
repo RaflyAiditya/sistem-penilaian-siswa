@@ -13,9 +13,9 @@ window.addEventListener('DOMContentLoaded', event => {
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
         // Uncomment Below to persist sidebar toggle between refreshes
-        if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-            document.body.classList.toggle('sb-sidenav-toggled');
-        }
+        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+        //     document.body.classList.toggle('sb-sidenav-toggled');
+        // }
         sidebarToggle.addEventListener('click', event => {
             event.preventDefault();
             document.body.classList.toggle('sb-sidenav-toggled');
@@ -61,6 +61,14 @@ document.addEventListener('DOMContentLoaded', function() {
             text: window.sessionSuccessMessage,
             confirmButtonText: 'OK'
         });
+    }
+    if (window.sessionInfoMessage) {
+        Swal.fire({
+                icon: 'info',
+                title: 'Informasi!',
+                text: window.sessionInfoMessage,
+                confirmButtonText: 'OK'
+            });
     }
 });
 
@@ -137,66 +145,310 @@ function confirmDeleteUser(userId, deleteUrl) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle untuk password
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+    // Mendapatkan data dari meta tag
+    const unauthorizedMessage = document.querySelector('meta[name="unauthorized-message"]')?.content;
     
-    togglePassword.addEventListener('click', function() {
-        // Toggle tipe input
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        
-        // Toggle icon
-        this.querySelector('i').classList.toggle('fa-eye');
-        this.querySelector('i').classList.toggle('fa-eye-slash');
-    });
+    if (unauthorizedMessage) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Akses Ditolak!',
+            text: unauthorizedMessage,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    }
+});
 
-    // Toggle untuk konfirmasi password
-    const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
-    const passwordConfirmation = document.querySelector('#password_confirmation');
-    
-    togglePasswordConfirmation.addEventListener('click', function() {
-        // Toggle tipe input
-        const type = passwordConfirmation.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordConfirmation.setAttribute('type', type);
+document.querySelectorAll('.delete-role').forEach(button => {
+    button.addEventListener('click', function() {
+        const roleId = this.dataset.roleId;
+        const roleName = this.dataset.roleName;
         
-        // Toggle icon
-        this.querySelector('i').classList.toggle('fa-eye');
-        this.querySelector('i').classList.toggle('fa-eye-slash');
+        Swal.fire({
+            title: 'Hapus Role?',
+            text: `Anda yakin ingin menghapus role "${roleName}"?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Buat form untuk delete request
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/roles-permissions/roles/${roleId}`;
+                
+                // Ambil CSRF token dari meta tag
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                
+                // Tambahkan CSRF token
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = csrfToken;
+                
+                // Tambahkan method spoofing untuk DELETE
+                const methodField = document.createElement('input');
+                methodField.type = 'hidden';
+                methodField.name = '_method';
+                methodField.value = 'DELETE';
+                
+                // Append semua input ke form
+                form.appendChild(csrfInput);
+                form.appendChild(methodField);
+                
+                // Append form ke document dan submit
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
     });
 });
 
-// document.getElementById('showPassword').addEventListener('change', function() {
-//     var passwordInput = document.getElementById('password');
-//     passwordInput.type = this.checked ? 'text' : 'password';
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Toggle untuk password
+//     const togglePassword = document.querySelector('#togglePassword');
+//     const password = document.querySelector('#password');
+    
+//     togglePassword.addEventListener('click', function() {
+//         // Toggle tipe input
+//         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+//         password.setAttribute('type', type);
+        
+//         // Toggle icon
+//         this.querySelector('i').classList.toggle('fa-eye');
+//         this.querySelector('i').classList.toggle('fa-eye-slash');
+//     });
+
+//     // Toggle untuk konfirmasi password
+//     const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
+//     const passwordConfirmation = document.querySelector('#password_confirmation');
+    
+//     togglePasswordConfirmation.addEventListener('click', function() {
+//         // Toggle tipe input
+//         const type = passwordConfirmation.getAttribute('type') === 'password' ? 'text' : 'password';
+//         passwordConfirmation.setAttribute('type', type);
+        
+//         // Toggle icon
+//         this.querySelector('i').classList.toggle('fa-eye');
+//         this.querySelector('i').classList.toggle('fa-eye-slash');
+//     });
 // });
 
-
-// JavaScript untuk memuat permissions dan menampilkan elemen secara dinamis
-document.addEventListener('DOMContentLoaded', function () {
-    // Fetch permissions dari endpoint Laravel
-    fetch('/api/user-roles-permissions')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch roles and permissions');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const userRoles = data.roles; // Roles pengguna
-            // const userPermissions = data.permissions; // Permissions pengguna
-
-            // Tampilkan elemen berdasarkan roles
-            document.querySelectorAll('[data-role]').forEach(element => {
-                const requiredRole = element.getAttribute('data-role');
-                // if (userRoles.includes(requiredRole) || userRoles.includes('admin')) {
-                if (userRoles.includes(requiredRole)) {
-                    // Tampilkan elemen jika role cocok atau user adalah admin
-                    element.style.display = 'flex';
+document.addEventListener('DOMContentLoaded', function() {
+    // Data permission yang sudah ter-assign ke setiap role
+    const rolePermissions = window.rolePermissions;
+    
+    const roleSelect = document.getElementById('roleSelect');
+    const permissionCheckboxes = document.querySelectorAll('.permission-checkbox');
+    
+    roleSelect.addEventListener('change', function() {
+        const roleId = this.value;
+        
+        // Reset semua checkbox
+        permissionCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        
+        // Jika role dipilih, check permission yang sesuai
+        if (roleId && rolePermissions[roleId]) {
+            permissionCheckboxes.forEach(checkbox => {
+                if (rolePermissions[roleId].includes(checkbox.value)) {
+                    checkbox.checked = true;
                 }
             });
-        })
-        .catch(error => {
-            console.error('Error loading permissions:', error);
-        });
+        }
+    });
 });
+
+document.getElementById('class').addEventListener('change', function() {
+    const className = this.value;
+    const container = document.getElementById('students-subjects-container');
+    container.innerHTML = '';
+
+    if (className) {
+        // Ambil data siswa dan pelajaran dari server
+        fetch(`/api/students-subjects?class=${className}`)
+        .then(response => response.json())
+        .then(data => {
+            data.students.forEach(student => {
+                data.subjects.forEach(subject => {
+                    const inputGroup = document.createElement('div');
+                    inputGroup.className = 'form-group';
+                    inputGroup.innerHTML = `
+                        <label>${student.name} - ${subject.name}</label>
+                        <input type="number" name="grade_${student.id}_${subject.id}" class="form-control" min="0" max="100" value="0">
+                    `;
+                    container.appendChild(inputGroup);
+                });
+            });
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Fungsi untuk modal create
+    const createCategoryType = document.getElementById('create_category_type');
+    if (createCategoryType) {
+        const createClassSelection = document.getElementById('create_class_selection');
+        const createStudentSelection = document.getElementById('create_student_selection');
+        const createClassSelect = createClassSelection.querySelector('select');
+        const createStudentSelect = createStudentSelection.querySelector('select');
+
+        createCategoryType.addEventListener('change', function() {
+            if (this.value === 'class') {
+                createClassSelection.style.display = 'block';
+                createStudentSelection.style.display = 'none';
+                createStudentSelect.value = '';
+                createStudentSelect.required = false;
+                createClassSelect.required = true;
+            } else if (this.value === 'student') {
+                createClassSelection.style.display = 'none';
+                createStudentSelection.style.display = 'block';
+                createClassSelect.value = '';
+                createClassSelect.required = false;
+                createStudentSelect.required = true;
+            } else {
+                createClassSelection.style.display = 'none';
+                createStudentSelection.style.display = 'none';
+                createClassSelect.value = '';
+                createStudentSelect.value = '';
+                createClassSelect.required = false;
+                createStudentSelect.required = false;
+            }
+        });
+
+        createStudentSelect.addEventListener('change', function() {
+            if (this.value !== '') {
+                createClassSelect.value = '';
+            }
+        });
+
+        createClassSelect.addEventListener('change', function() {
+            if (this.value !== '') {
+                createStudentSelect.value = '';
+            }
+        });
+    }
+
+    // Fungsi untuk modal delete
+    const deleteCategoryType = document.getElementById('delete_category_type');
+    if (deleteCategoryType) {
+        const deleteClassSelection = document.getElementById('delete_class_selection');
+        const deleteStudentSelection = document.getElementById('delete_student_selection');
+        const deleteClassSelect = deleteClassSelection.querySelector('select');
+        const deleteStudentSelect = deleteStudentSelection.querySelector('select');
+
+        deleteCategoryType.addEventListener('change', function() {
+            if (this.value === 'class') {
+                deleteClassSelection.style.display = 'block';
+                deleteStudentSelection.style.display = 'none';
+                deleteStudentSelect.value = '';
+                deleteStudentSelect.required = false;
+                deleteClassSelect.required = true;
+            } else if (this.value === 'student') {
+                deleteClassSelection.style.display = 'none';
+                deleteStudentSelection.style.display = 'block';
+                deleteClassSelect.value = '';
+                deleteClassSelect.required = false;
+                deleteStudentSelect.required = true;
+            } else {
+                deleteClassSelection.style.display = 'none';
+                deleteStudentSelection.style.display = 'none';
+                deleteClassSelect.value = '';
+                deleteStudentSelect.value = '';
+                deleteClassSelect.required = false;
+                deleteStudentSelect.required = false;
+            }
+        });
+
+        deleteStudentSelect.addEventListener('change', function() {
+            if (this.value !== '') {
+                deleteClassSelect.value = '';
+            }
+        });
+
+        deleteClassSelect.addEventListener('change', function() {
+            if (this.value !== '') {
+                deleteStudentSelect.value = '';
+            }
+        });
+    }
+});
+
+function sanitizeInput(input) {
+    const value = input.value;
+    const cursorPosition = input.selectionStart;
+
+    // Replace non-numeric characters except for comma and dot
+    const sanitizedValue = value.replace(/[^0-9.,]/g, '');
+
+    // Replace comma with dot
+    const newValue = sanitizedValue.replace(',', '.');
+
+    // Update the input value
+    input.value = newValue;
+
+    // Restore the cursor position
+    if (value !== newValue) {
+        input.setSelectionRange(cursorPosition, cursorPosition);
+    }
+}
+
+// function checkPassword() {
+//     const password = document.getElementById('password').value;
+//     const requirements = document.getElementById('passwordRequirements');
+//     const lengthCheck = document.getElementById('lengthCheck');
+//     const submitBtn = document.getElementById('submitBtn');
+
+//     // Tampilkan requirements saat user mulai mengetik
+//     if (password.length > 0) {
+//         requirements.style.display = 'block';
+//     } else {
+//         requirements.style.display = 'none';
+//         return;
+//     }
+
+//     // Cek panjang minimal
+//     if (password.length >= 8) {
+//         lengthCheck.style.color = '#198754';
+//         lengthCheck.querySelector('i').className = 'fa-solid fa-check';
+        
+//     } else {
+//         lengthCheck.style.color = '#dc3545';
+//         lengthCheck.querySelector('i').className = 'fa-solid fa-xmark';
+//     }
+
+//     // const isValid = password.length >= 8;
+//     // submitBtn.disabled = !isValid;
+
+//     // submitBtn.disabled = !(password.length >= 8);
+// }
+
+// function checkPasswordMatch() {
+//     const password = document.getElementById('password').value;
+//     const confirmPassword = document.getElementById('password_confirmation').value;
+//     const message = document.getElementById('passwordMatchMessage');
+//     const submitBtn = document.getElementById('submitBtn');
+
+//     if (password === '' || confirmPassword === '') {
+//         message.style.display = 'none';
+//         submitBtn.disabled = false;
+//         return;
+//     }
+
+//     if (password !== confirmPassword) {
+//         message.style.display = 'block';
+//         message.textContent = 'Password tidak cocok!';
+//         message.style.color = '#dc3545';
+//         // submitBtn.disabled = true;
+//     } else {
+//         message.style.display = 'block';
+//         message.textContent = 'Password cocok!';
+//         message.style.color = '#198754';
+//         // submitBtn.disabled = false;
+//         // submitBtn.disabled = !(password.length >= 8);
+//     }
+// }

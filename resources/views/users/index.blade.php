@@ -1,11 +1,12 @@
-<x-navigation-layout title="Atur Pengguna">
+<x-navigation-layout title="Akun">
 
     <x-slot name="header">
-        <h1 class="fs-5"><b>Mengatur Pengguna</b></h1>
+        <h1 class="fs-5"><b>Akun</b></h1>
 
         <x-breadcrumb :items="[
             ['name' => 'Home', 'url' => route('dashboard')],
-            ['name' => 'Atur Pengguna', 'url' => null]
+            ['name' => 'Pengguna', 'url' => null],
+            ['name' => 'Akun', 'url' => null]
         ]" />
     </x-slot>
 
@@ -26,19 +27,21 @@
                     <table class="table table-hover text-nowrap" style="font-size:0.95em">
                         <thead>
                             <tr>
-                                <th style="width: 30px">#</th>
-                                <th>Nama Pengguna</th>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>NIP atau NIS</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Tanggal Dibuat</th>
-                                <th style="width: 160px">Aksi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody  class="table-sm align-middle table-group-divider">
+                        <tbody class="table-sm align-middle table-group-divider">
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td style="width: 30px">{{ $loop->iteration }}</td>
                                     <td>{{ $user->name}}</td>
+                                    <td>{{ $user->nip_or_nis}}</td>
                                     <td>{{ $user->email}}</td>
                                     <td>
                                         @foreach ($user->roles as $role)
@@ -46,7 +49,7 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $user->created_at->format('d-m-Y') }}</td>
-                                    <td>
+                                    <td style="width: 10%">
                                         <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i>&nbsp;edit</a>
 
                                         <button class=" btn btn-link" style="margin: -0.25rem !important">

@@ -17,8 +17,8 @@
 
         <div class="card my-4" data-page-id="subjects-page">
             <div class="card-header">
-                <ul class="nav nav-tabs justify-content-between">
-                    <ul class="nav nav-tabs justify-content-between" role="tablist">
+                <ul class="nav justify-content-between mt-2">
+                    <ul class="nav nav-tabs" role="tablist">
                         @foreach ($dayMapping as $key => $dayName)
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link {{ $loop->first ? 'active' : '' }}" 
@@ -34,9 +34,13 @@
                             </li>
                         @endforeach
                     </ul>
+                    @can('mengelola daftar pelajaran')
                     <button class=" btn btn-link mx-2 mb-2" style="padding: 0%">
-                        <a href="{{ route('subjects.create') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;Tambah pelajaran</a>
+                        <a href="{{ route('subjects.create') }}" class="btn btn-primary">
+                            Tambah pelajaran
+                        </a>
                     </button>
+                    @endcan
                 </ul>
             </div>
 
@@ -53,7 +57,7 @@
 
                                 <div class="card shadow-sm mb-4">
                                     <div class="card-header bg-light">
-                                        <h2 class="card-title fs-6 fw-bold mb-0 text-center" style="color: #1a1d20">Kelas {{ $class }}</h2>
+                                        <h2 class="card-title fs-6 fw-bold mb-0 text-center" style="color: #1a1d20">Jadwal Pelajaran Kelas {{ $class }}</h2>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive-lg">

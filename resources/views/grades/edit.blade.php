@@ -1,59 +1,40 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Nilai') }}
-        </h2>
-    </x-slot>
-
-    <div class="center container mt-4">
-        <form action="{{ route('grades.update', $grade) }}" method="POST">
-            @csrf
-            @method('PUT')
-
-            <!-- Dropdown untuk memilih siswa -->
-            <div class="mb-3">
-                <label for="student_id" class="form-label">Siswa</label>
-                <select name="student_id" id="student_id" class="form-control" required>
-                    <option value="">Pilih Siswa</option>
-                        @foreach($students as $student)
-                            <option value="{{ $student->id }}" {{ $student->id == $grade->student_id ? 'selected' : '' }}>
-                                {{ $student->name }}
-                            </option>
-                        @endforeach
-                </select>
-                @error('student_id')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
+<div class="modal fade" id="editGradeModal-{{ $grade->id }}" tabindex="-1" aria-labelledby="editGradeModalLabel-{{ $grade->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered d-flex justify-content-center">
+        <div class="modal-content"style="width: 500px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editGradeModalLabel-{{ $grade->id }}">
+                    @if($grade->grade=='0') Input Nilai
+                    @else Edit Nilai
+                    @endif
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Dropdown untuk memilih mata pelajaran -->
-            <div class="mb-3">
-                <label for="subject_id" class="form-label">Mata Pelajaran</label>
-                <select name="subject_id" id="subject_id" class="form-control" required>
-                    <option value="">Pilih Mata Pelajaran</option>
-                    @foreach($subjects as $subject)
-                        <option value="{{ $subject->id }}" {{ $subject->id == $grade->subject_id ? 'selected' : '' }}>
-                            {{ $subject->subject_name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('subject_id')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
+            <div class="modal-body">
+                <!-- Informasi Siswa -->
+                <div class="mb-3">
+                    <strong style="margin-right: 23px">Nama Siswa</strong><strong>:</strong> {{ $grade->student->name }}<br>
+                    <strong style="margin-right: 73px">Kelas</strong><strong>:</strong> {{ $grade->student->class }}<br>
+                    <strong>Mata Pelajaran&nbsp;:</strong> {{ $grade->subject->subjectName->subject_name ?? '-' }}<br>
+                    <strong style="margin-right: 76px">Guru</strong><strong>:</strong> {{ $grade->subject->teacher->name }}<br>
+                </div>
+                <p class="text-muted small">
+                    <strong>Catatan : </strong><br>
+                    {{ __('Apabila nilai yang diinputkan berupa desimal, pembatas desimal koma (,) akan diubah otomatis menjadi titik (.)') }}
+                </p>
+                <form action="{{ route('grades.update', $grade->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="grade">Nilai:</label>
+                        <input type="text" name="grade" id="grade" class="form-control" min="0" max="100" value="{{ old('grade', $grade->grade) }}" required
+                            inputmode="decimal" oninput="sanitizeInput(this)">
+                        @error('grade')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
+                </form>
             </div>
-
-            <!-- Input nilai -->
-            <div class="mb-3">
-                <label for="grade" class="form-label">Nilai</label>
-                <input type="number" name="grade" id="grade" class="form-control" min="0" max="100"
-                    value="{{ old('grade', $grade->grade) }}" required>
-                @error('grade')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-            <a href="{{ route('grades.index') }}" class="btn btn-secondary">Batal</a>
-        </form>
+        </div>
     </div>
-</x-app-layout>
+</div>

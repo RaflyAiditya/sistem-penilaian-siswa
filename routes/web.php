@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -22,7 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
@@ -38,35 +39,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/subjects/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
 
     Route::get('/grades', [GradeController::class, 'index'])->name('grades.index');
-    Route::get('/grades/create', [GradeController::class, 'create'])->name('grades.create');
+    // Route::get('/grades/create', [GradeController::class, 'create'])->name('grades.create');
     Route::post('/grades', [GradeController::class, 'store'])->name('grades.store');
     Route::get('/grades/{grade}/edit', [GradeController::class, 'edit'])->name('grades.edit');
     Route::put('/grades/{grade}', [GradeController::class, 'update'])->name('grades.update');
+    Route::delete('/grades/delete-by-category', [GradeController::class, 'deleteByCategory'])->name('grades.deleteByCategory');
     Route::delete('/grades/{grade}', [GradeController::class, 'destroy'])->name('grades.destroy');
-});
 
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::post('/verify-password', [UserController::class, 'verifyPassword']);
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-});
 
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::get('/roles-permissions', [RolePermissionController::class, 'index'])->name('roles.index');
-    Route::post('/roles', [RolePermissionController::class, 'createRole'])->name('roles.create');
-    Route::post('/assign-permissions', [RolePermissionController::class, 'assignPermissions'])->name('roles.assign-permissions');
-});
-
-// Pastikan pengguna sudah terautentikasi
-Route::middleware('auth')->get('/permissions', function () {
-    return response()->json([
-        'permissions' => Auth::user()->getAllPermissions()->pluck('name'),
-    ]);
+    Route::get('/roles-permissions/roles', [RolePermissionController::class, 'indexRole'])->name('roles-permissions.roles.index');
+    Route::get('/roles-permissions/permissions', [RolePermissionController::class, 'indexPermission'])->name('roles-permissions.permissions.index');
+    Route::post('/create-role', [RolePermissionController::class, 'createRole'])->name('roles-permissions.createRole');
+    Route::post('/roles-permissions/roles/edit', [RolePermissionController::class, 'editRole'])->name('roles-permissions.editRole');
+    Route::delete('/roles-permissions/roles/{role}', [RolePermissionController::class, 'deleteRole'])->name('roles-permissions.deleteRole');
+    Route::post('/assign-permissions', [RolePermissionController::class, 'assignPermissions'])->name('roles-permissions.assignPermissions');
 });
 
 require __DIR__ . '/auth.php';
-
-// Route untuk Root
-// Route::get('/', [GradeController::class, 'index'])->name('layout');
