@@ -60,7 +60,7 @@ class RegisteredUserController extends Controller
         if ($isTeacher) {
             $user->assignRole('guru');
         } else {
-            $user->assignRole('user');
+            $user->assignRole('siswa');
         }
 
 

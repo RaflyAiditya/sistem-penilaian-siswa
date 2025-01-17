@@ -6,16 +6,6 @@ function checkPassword() {
     const requirements = document.getElementById('passwordRequirements');
     const lengthCheck = document.getElementById('lengthCheck');
 
-    // // Tampilkan requirements saat user mulai mengetik
-    // if (password.length > 0) {
-    //     requirements.style.display = 'block';
-    // } else {
-    //     requirements.style.display = 'none';
-    //     isPasswordValid = false;
-    //     updateSubmitButton();
-    //     return;
-    // }
-
     // Jika password kosong
     if (password.length === 0) {
         requirements.style.display = 'none';
@@ -75,10 +65,6 @@ function checkPasswordMatch() {
 }
 
 function updateSubmitButton() {
-    // const submitBtn = document.getElementById('submitBtn');
-    // // Tombol submit hanya aktif jika password valid DAN cocok
-    // submitBtn.disabled = !(isPasswordValid && isPasswordMatch);
-
     const submitBtn = document.getElementById('submitBtn');
     const password = document.getElementById('password').value;
     

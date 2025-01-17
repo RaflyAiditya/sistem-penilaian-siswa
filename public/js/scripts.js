@@ -178,7 +178,7 @@ document.querySelectorAll('.delete-role').forEach(button => {
                 // Buat form untuk delete request
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = `/roles-permissions/roles/${roleId}`;
+                form.action = `/users/roles/${roleId}`;
                 
                 // Ambil CSRF token dari meta tag
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -206,36 +206,6 @@ document.querySelectorAll('.delete-role').forEach(button => {
         });
     });
 });
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     // Toggle untuk password
-//     const togglePassword = document.querySelector('#togglePassword');
-//     const password = document.querySelector('#password');
-    
-//     togglePassword.addEventListener('click', function() {
-//         // Toggle tipe input
-//         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-//         password.setAttribute('type', type);
-        
-//         // Toggle icon
-//         this.querySelector('i').classList.toggle('fa-eye');
-//         this.querySelector('i').classList.toggle('fa-eye-slash');
-//     });
-
-//     // Toggle untuk konfirmasi password
-//     const togglePasswordConfirmation = document.querySelector('#togglePasswordConfirmation');
-//     const passwordConfirmation = document.querySelector('#password_confirmation');
-    
-//     togglePasswordConfirmation.addEventListener('click', function() {
-//         // Toggle tipe input
-//         const type = passwordConfirmation.getAttribute('type') === 'password' ? 'text' : 'password';
-//         passwordConfirmation.setAttribute('type', type);
-        
-//         // Toggle icon
-//         this.querySelector('i').classList.toggle('fa-eye');
-//         this.querySelector('i').classList.toggle('fa-eye-slash');
-//     });
-// });
 
 document.addEventListener('DOMContentLoaded', function() {
     // Data permission yang sudah ter-assign ke setiap role
@@ -294,29 +264,52 @@ document.addEventListener('DOMContentLoaded', function() {
     if (createCategoryType) {
         const createClassSelection = document.getElementById('create_class_selection');
         const createStudentSelection = document.getElementById('create_student_selection');
+        // const createSubjectSelection = document.getElementById('create_subject_selection');
         const createClassSelect = createClassSelection.querySelector('select');
         const createStudentSelect = createStudentSelection.querySelector('select');
+        // const createSubjectSelect = createSubjectSelection.querySelector('select');
 
         createCategoryType.addEventListener('change', function() {
             if (this.value === 'class') {
                 createClassSelection.style.display = 'block';
                 createStudentSelection.style.display = 'none';
+                // createSubjectSelection.style.display = 'none';
                 createStudentSelect.value = '';
-                createStudentSelect.required = false;
+                // createSubjectSelect.value = '';
                 createClassSelect.required = true;
+                createStudentSelect.required = false;
+                // createSubjectSelect.required = false;
+
             } else if (this.value === 'student') {
                 createClassSelection.style.display = 'none';
                 createStudentSelection.style.display = 'block';
+                // createSubjectSelection.style.display = 'none';
                 createClassSelect.value = '';
+                // createSubjectSelect.value = '';
                 createClassSelect.required = false;
                 createStudentSelect.required = true;
+                // createSubjectSelect.required = false;
+
+            // } else if (this.value === 'subject') {
+            //     createClassSelection.style.display = 'none';
+            //     createStudentSelection.style.display = 'none';
+            //     createSubjectSelection.style.display = 'block';
+            //     createClassSelect.value = '';
+            //     createStudentSelect.value = '';
+            //     createClassSelect.required = false;
+            //     createStudentSelect.required = false;
+            //     createSubjectSelect.required = true;
+
             } else {
                 createClassSelection.style.display = 'none';
                 createStudentSelection.style.display = 'none';
+                // createSubjectSelection.style.display = 'none';
                 createClassSelect.value = '';
                 createStudentSelect.value = '';
+                // createSubjectSelect.value = '';
                 createClassSelect.required = false;
                 createStudentSelect.required = false;
+                // createSubjectSelect.required = false;
             }
         });
 
@@ -331,6 +324,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 createStudentSelect.value = '';
             }
         });
+
+        // createSubjectSelect.addEventListener('change', function() {
+        //     if (this.value !== '') {
+        //         createSubjectSelect.value = '';
+        //     }
+        // });
     }
 
     // Fungsi untuk modal delete
@@ -396,59 +395,3 @@ function sanitizeInput(input) {
         input.setSelectionRange(cursorPosition, cursorPosition);
     }
 }
-
-// function checkPassword() {
-//     const password = document.getElementById('password').value;
-//     const requirements = document.getElementById('passwordRequirements');
-//     const lengthCheck = document.getElementById('lengthCheck');
-//     const submitBtn = document.getElementById('submitBtn');
-
-//     // Tampilkan requirements saat user mulai mengetik
-//     if (password.length > 0) {
-//         requirements.style.display = 'block';
-//     } else {
-//         requirements.style.display = 'none';
-//         return;
-//     }
-
-//     // Cek panjang minimal
-//     if (password.length >= 8) {
-//         lengthCheck.style.color = '#198754';
-//         lengthCheck.querySelector('i').className = 'fa-solid fa-check';
-        
-//     } else {
-//         lengthCheck.style.color = '#dc3545';
-//         lengthCheck.querySelector('i').className = 'fa-solid fa-xmark';
-//     }
-
-//     // const isValid = password.length >= 8;
-//     // submitBtn.disabled = !isValid;
-
-//     // submitBtn.disabled = !(password.length >= 8);
-// }
-
-// function checkPasswordMatch() {
-//     const password = document.getElementById('password').value;
-//     const confirmPassword = document.getElementById('password_confirmation').value;
-//     const message = document.getElementById('passwordMatchMessage');
-//     const submitBtn = document.getElementById('submitBtn');
-
-//     if (password === '' || confirmPassword === '') {
-//         message.style.display = 'none';
-//         submitBtn.disabled = false;
-//         return;
-//     }
-
-//     if (password !== confirmPassword) {
-//         message.style.display = 'block';
-//         message.textContent = 'Password tidak cocok!';
-//         message.style.color = '#dc3545';
-//         // submitBtn.disabled = true;
-//     } else {
-//         message.style.display = 'block';
-//         message.textContent = 'Password cocok!';
-//         message.style.color = '#198754';
-//         // submitBtn.disabled = false;
-//         // submitBtn.disabled = !(password.length >= 8);
-//     }
-// }

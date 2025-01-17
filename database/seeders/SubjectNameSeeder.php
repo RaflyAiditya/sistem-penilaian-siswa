@@ -64,18 +64,6 @@ class SubjectNameSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'subject_name_id' => '220',
-                'subject_name' => 'Pendidikan Jasmani, Olahraga dan Kesehatan',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'subject_name_id' => '224',
-                'subject_name' => 'Teknologi Informasi dan Komunikasi',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
                 'subject_name_id' => '227',
                 'subject_name' => 'Prakarya',
                 'created_at' => now(),

@@ -1,7 +1,7 @@
 <x-navigation-layout title="Profil">
 
     <x-slot name="header">
-        <h1 class="fs-5"><b>Atur Profil</b></h1>
+        <h1 class="fs-5"><b>Kelola Profil</b></h1>
 
         <x-breadcrumb :items="[
             ['name' => 'Home', 'url' => route('dashboard')],

@@ -59,7 +59,7 @@
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-font-size: 0.95rem;
+  --bs-body-font-size: 0.9rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
   /* --bs-body-color: #212529; */
@@ -257,11 +257,6 @@ strong {
 small,
 .small {
   font-size: 0.875em;
-}
-
-small1,
-.small1 {
-  font-size: 0.825em;
 }
 
 mark,
@@ -2324,7 +2319,7 @@ progress {
   display: block;
   width: 100%;
   padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
@@ -2514,7 +2509,7 @@ textarea.form-control-lg {
   width: 100%;
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
   -moz-padding-start: calc(0.75rem - 3px);
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
@@ -2529,6 +2524,15 @@ textarea.form-control-lg {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+.label-form-select {
+  display: flex;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+  background-color: #F7F7F7;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -12986,11 +12990,23 @@ body {
   flex-shrink: 0;
 }
 
-.sb-sidenav .sb-sidenav-header {
+.sb-sidenav .sb-sidenav-header1 {
   padding-top: 0.75rem;
+  margin-left: 1.2rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.sb-sidenav .sb-sidenav-header2 {
   padding-bottom: 0.75rem;
   margin-left: 1.2rem;
   margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.sb-sidenav .sb-sidenav-header {
+  padding-top: 0.25rem;
+  margin-right: 0.5rem;
   flex-shrink: 0;
 }
 
@@ -13260,8 +13276,13 @@ footer a {
 }
 
 .sb-topnav button {
-  color: #4a4a4b;
+  /* color: #4a4a4b; */
+  color: #696f89;
   text-decoration: none;
+}
+
+.nav button a {
+  font-size: 0.9rem;
 }
 
 .sb-sidenav .sb-sidenav-header {
@@ -13274,7 +13295,7 @@ footer a {
   color: #dedfdf;
 }
 
-.sb-sidenav .sb-sidenav-header.active {
+.sb-sidenav .sb-sidenav-header2.active {
   color: #dedfdf;
 }
 
@@ -13299,4 +13320,8 @@ footer a {
   margin-bottom: 0.25rem;
   font-size: 0.875em;
   transition: all 0.3s ease;
+}
+
+td {
+  height: 50px;
 }

@@ -4,11 +4,11 @@
             {{ __('Hapus Akun') }}
         </h2>
         <p class="text-muted small">
-            {{ __('Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen. Sebelum menghapus akun Anda, harap unduh data atau informasi yang ingin Anda simpan.') }}
+            {{ __('Setelah akun Anda dihapus, semua data anda akan dihapus secara permanen. Sebelum menghapus akun Anda, harap unduh data atau informasi yang ingin Anda simpan.') }}
         </p>
     </header>
 
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+    <button type="button" class="btn btn-danger" style="font-size: 0.9rem;" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
         <i class="fa-solid fa-trash-can"></i>&nbsp{{ __('Hapus Akun') }}
     </button>
 
@@ -27,7 +27,7 @@
                     
                     <div class="modal-body">
                         <p class="text-muted small">
-                            {{ __('Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen. Silakan masukkan password Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.') }}
+                            {{ __('Setelah akun Anda dihapus, semua data anda akan dihapus secara permanen. Silakan masukkan password Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.') }}
                         </p>
 
                         <div class="mb-3">
@@ -40,8 +40,8 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i>&nbsp{{ __('Batal') }}</button>
-                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>&nbsp{{ __('Hapus Akun') }}</button>
+                        <button type="button" class="btn btn-secondary" style="font-size: 0.9rem;" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i>&nbsp{{ __('Batal') }}</button>
+                        <button type="submit" class="btn btn-danger" style="font-size: 0.9rem;"><i class="fa-solid fa-trash-can"></i>&nbsp{{ __('Hapus Akun') }}</button>
                     </div>
                 </form>
             </div>

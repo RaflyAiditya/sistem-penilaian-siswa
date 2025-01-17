@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\GradeController;
@@ -10,12 +11,11 @@ use App\Http\Controllers\RolePermissionController;
 
 Route::get('/', function () {
     return redirect('login');
-    // return view('welcome');
 })->name('auth.login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
@@ -52,12 +54,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/verify-password', [UserController::class, 'verifyPassword']);
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
-    Route::get('/roles-permissions/roles', [RolePermissionController::class, 'indexRole'])->name('roles-permissions.roles.index');
-    Route::get('/roles-permissions/permissions', [RolePermissionController::class, 'indexPermission'])->name('roles-permissions.permissions.index');
-    Route::post('/create-role', [RolePermissionController::class, 'createRole'])->name('roles-permissions.createRole');
-    Route::post('/roles-permissions/roles/edit', [RolePermissionController::class, 'editRole'])->name('roles-permissions.editRole');
-    Route::delete('/roles-permissions/roles/{role}', [RolePermissionController::class, 'deleteRole'])->name('roles-permissions.deleteRole');
-    Route::post('/assign-permissions', [RolePermissionController::class, 'assignPermissions'])->name('roles-permissions.assignPermissions');
+    Route::get('/users/roles', [RolePermissionController::class, 'indexRole'])->name('users.roles.index');
+    Route::post('/users/create-role', [RolePermissionController::class, 'createRole'])->name('users.createRole');
+    Route::post('/users/roles/edit', [RolePermissionController::class, 'editRole'])->name('users.editRole');
+    Route::delete('/users/roles/{role}', [RolePermissionController::class, 'deleteRole'])->name('users.deleteRole');
+
+    Route::get('/users/permissions', [RolePermissionController::class, 'indexPermission'])->name('users.permissions.index');
+    Route::post('/users/assign-permissions', [RolePermissionController::class, 'assignPermissions'])->name('users.assignPermissions');
 });
 
 require __DIR__ . '/auth.php';

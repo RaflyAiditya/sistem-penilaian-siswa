@@ -1,7 +1,7 @@
 <x-navigation-layout title="Permission">
 
     <x-slot name="header">
-        <h1 class="fs-5"><b>Permission</b></h1>
+        <h1 class="fs-5"><b>Kelola Permission</b></h1>
 
         <x-breadcrumb :items="[
             ['name' => 'Home', 'url' => route('dashboard')],
@@ -24,13 +24,13 @@
                     <div class="card-body mx-4 mt-3">
                         <header class="mb-4">
                             <h2 class="card-title fs-5 mb-2">
-                                {{ __('Atur Permission') }}
+                                {{ __('Kelola Permission') }}
                             </h2>
                             <p class="text-muted small">
-                                {{ __("Kelola permission untuk role yang telah dibuat.") }}
+                                {{ __("Kelola permission untuk role yang telah ada") }}
                             </p>
                         </header>
-                        <form action="{{ route('roles-permissions.assignPermissions') }}" method="POST">
+                        <form action="{{ route('users.assignPermissions') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label for="roleSelect" class="form-label">Pilih Role</label>
@@ -61,7 +61,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
+                            <button type="submit" class="btn btn-success" style="font-size: 0.9rem;"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
                         </form>
                     </div>
                 </div>

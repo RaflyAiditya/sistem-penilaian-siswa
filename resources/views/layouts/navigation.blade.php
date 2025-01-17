@@ -16,14 +16,15 @@
             </a>
             <div class="d-flex align-items-center ms-auto">
                 <!-- Navbar -->
-                <ul class="navbar-nav me-2 d-lg-block">
+                {{-- <ul class="navbar-nav me-2 d-lg-block"> --}}
+                <ul class="navbar-nav me-2 d-inline d-lg-none">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user fa-fw"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="fa-solid fa-address-card"></i>&nbsp;&nbsp;Atur Profil</a>
+                                <a class="dropdown-item" style="color: #696f89;" href="{{ route('profile.edit') }}"><i class="fa-solid fa-address-card"></i>&nbsp;&nbsp;Atur Profil</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider d-lg-none">
@@ -36,6 +37,11 @@
                             </li>
                         </ul>
                     </li>
+                </ul>
+                <ul class="navbar-nav me-2 d-none d-lg-block">
+                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                        <i class="fas fa-user fa-fw"></i>
+                    </a>
                 </ul>
                 <!-- Form Logout -->
                 <form method="POST" action="{{ route('logout') }}" class="align-items-center d-none d-lg-block ms-auto my-0 me-3">
@@ -51,11 +57,16 @@
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <a class="sb-sidenav-header {{ request()->routeIs('profile.edit') ? 'active' : '' }}" href="{{ route('profile.edit') }}">
+                    <div class="sb-sidenav-header1">
                         <div class="small">masuk sebagai :</div>
-                        <div class="fw-semibold">{{ Auth::user()->name }}</div>
-                        <div class="small1">{{ Auth::user()->email }}</div>
-                    </a>
+                    </div>
+                    <div class="sb-sidenav-header2 {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+                        <div class="input-group d-flex justify-content-between">
+                            <div class="fw-semibold">{{ Auth::user()->name }}</div>
+                            <a class="sb-sidenav-header" href="{{ route('profile.edit') }}"><i class="fa-solid fa-gear"></i></a>
+                        </div>
+                            <div style="font-size: 0.825em;">{{ Auth::user()->email }}</div>
+                    </div>
                     <hr style="margin: 0px"/>
 
                     <div class="sb-sidenav-menu mt-4 ms-2 me-2 px-1">
@@ -90,7 +101,6 @@
                             </a>
                             @endcan
 
-
                             {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMasterData" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-table"></i></div>
                                  &nbsp;Master Data
@@ -116,20 +126,13 @@
                                 </nav>
                             </div> --}}
 
-
-
                             @canany(['melihat pengguna', 'mengelola roles dan permissions'])
-                            {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-user-gear"></i></div>
-                                 &nbsp;Pengguna
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a> --}}
-                            <a class="nav-link {{ request()->routeIs(['users.index', 'users.edit', 'roles-permissions.roles.index', 'roles-permissions.permissions.index']) ? '' : 'collapsed' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePengguna" aria-expanded="{{ request()->routeIs(['users.index', 'users.edit', 'roles-permissions.index']) ? 'true' : 'false' }}" aria-controls="collapseLayouts">
+                            <a class="nav-link {{ request()->routeIs(['users.index', 'users.edit', 'users.roles.index', 'users.permissions.index']) ? '' : 'collapsed' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePengguna" aria-expanded="{{ request()->routeIs(['users.index', 'users.edit', 'roles-permissions.index']) ? 'true' : 'false' }}" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user-gear"></i></div>
                                  &nbsp;Pengguna
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse {{ request()->routeIs(['users.index', 'users.edit', 'roles-permissions.roles.index', 'roles-permissions.permissions.index']) ? 'show' : '' }}" id="collapsePengguna" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse {{ request()->routeIs(['users.index', 'users.edit', 'users.roles.index', 'users.permissions.index']) ? 'show' : '' }}" id="collapsePengguna" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav" style="margin-left: 15px; padding-right: 15px; font-size: 0.9em;">
 
                                     <!-- Atur Pengguna -->
@@ -142,7 +145,7 @@
 
                                     <!-- Atur Role -->
                                     @can('mengelola role')
-                                    <a class="nav-link gap-1 {{ request()->routeIs('roles-permissions.roles.index') ? 'active' : '' }}" href="{{ route('roles-permissions.roles.index') }}">
+                                    <a class="nav-link gap-1 {{ request()->routeIs('users.roles.index') ? 'active' : '' }}" href="{{ route('users.roles.index') }}">
                                         <div class="sb-nav-link-icon" style="font-size: 0.5em;"><i class="fa-solid fa-diamond"></i></div>
                                         Role
                                     </a>
@@ -150,7 +153,7 @@
 
                                     <!-- Atur Permission -->
                                     @can('mengelola permission')
-                                    <a class="nav-link gap-1 {{ request()->routeIs('roles-permissions.permissions.index') ? 'active' : '' }}" href="{{ route('roles-permissions.permissions.index') }}">
+                                    <a class="nav-link gap-1 {{ request()->routeIs('users.permissions.index') ? 'active' : '' }}" href="{{ route('users.permissions.index') }}">
                                         <div class="sb-nav-link-icon" style="font-size: 0.5em;"><i class="fa-solid fa-diamond"></i></div>
                                         Permission
                                     </a>
@@ -176,13 +179,12 @@
 
                 <main style="background-color: #e9ecef;">
                     {{ $slot }}
-                    {{-- {{ dump($slot) }} --}}
                 </main>
 
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright 2024 &copy; Sispensa</div>
+                            <div class="text-muted">Copyright 2025 &copy; Sispensa</div>
                             <div>
                                 <a href="">Privacy Policy</a>
                                 &middot;

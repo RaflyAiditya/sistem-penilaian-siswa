@@ -32,7 +32,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-success mt-3"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
+                    <button type="submit" class="btn btn-success mt-3" style="font-size: 0.9rem;"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
                 </form>
             </div>
         </div>

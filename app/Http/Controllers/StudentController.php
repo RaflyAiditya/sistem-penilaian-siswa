@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\Subject;
+
 
 class StudentController extends Controller
 {
@@ -20,7 +22,14 @@ class StudentController extends Controller
             '8' => Student::where('class', '8')->get(),
             '9' => Student::where('class', '9')->get(),
         ]);
-        return view('students.index', compact('studentsByClass'));
+
+        $teacherClasses = auth()->user()->hasRole('guru') 
+            ? Subject::whereHas('teacher', function($query) {
+                $query->where('nip', auth()->user()->nip_or_nis);
+              })->pluck('class')->unique()
+            : collect();
+
+        return view('students.index', compact('studentsByClass', 'teacherClasses'));
     }
 
     public function create()

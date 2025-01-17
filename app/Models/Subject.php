@@ -35,17 +35,18 @@ class Subject extends Model
     {
         return $this->hasMany(Grade::class);
     }
-    protected function timeStart(): Attribute
-{
-    return Attribute::make(
-        get: fn ($value) => date('H:i', strtotime($value)),
-    );
-}
 
-protected function timeEnd(): Attribute
-{
-    return Attribute::make(
-        get: fn ($value) => date('H:i', strtotime($value)),
-    );
-}
+    protected function timeStart(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => date('H:i', strtotime($value)),
+        );
+    }
+
+    protected function timeEnd(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => date('H:i', strtotime($value)),
+        );
+    }
 }

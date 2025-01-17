@@ -9,9 +9,6 @@
                 <p class="text-muted small">
                     {{ __('Daripada menghapus data satu per satu, Anda dapat langsung menghapus data berdasarkan kategori.') }}
                 </p>
-                {{-- <p class="text-muted small">
-                    <strong>{{ __('Silakan pilih kelas atau siswa yang ingin Anda hapus datanya untuk penilaian.') }}</strong>
-                </p> --}}
                 <form action="{{ route('grades.deleteByCategory') }}" method="POST">
                     @csrf
                     @method('DELETE')
@@ -44,27 +41,7 @@
                         </select>
                     </div>
 
-                    {{-- <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="mb-2">Pilih Kelas</label>
-                            <select name="class" id="class" class="form-control">
-                                <option value="">Kelas...</option>
-                                @foreach($classes as $class)
-                                    <option value="{{ $class->class }}">{{ $class->class }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="mb-2">Pilih Siswa</label>
-                            <select name="student_id" id="student_id" class="form-control">
-                                <option value="">Siswa...</option>
-                                @foreach($students as $student)
-                                    <option value="{{ $student->id }}">{{ $student->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div> --}}
-                    <button type="submit" class="btn btn-danger mt-3"><i class="fa-solid fa-trash"></i>&nbsp;Hapus</button>
+                    <button type="submit" class="btn btn-danger mt-3" style="font-size: 0.9rem;"><i class="fa-solid fa-trash"></i>&nbsp;Hapus</button>
                 </form>
             </div>
         </div>

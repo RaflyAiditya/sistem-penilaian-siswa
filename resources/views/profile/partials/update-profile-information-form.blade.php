@@ -44,7 +44,7 @@
         </div>
 
         <div class="d-flex align-items-center gap-3">
-            <button type="submit" class="btn btn-success"><i class="fa-solid fa-circle-check"></i>&nbsp;{{ __('Simpan') }}</button>
+            <button type="submit" class="btn btn-success" style="font-size: 0.9rem;"><i class="fa-solid fa-circle-check"></i>&nbsp;{{ __('Simpan') }}</button>
 
             {{-- @if (session('status') === 'profile-updated')
                 <div class="text-success small" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">

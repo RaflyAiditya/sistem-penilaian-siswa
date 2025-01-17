@@ -98,8 +98,8 @@
                                 </div>
                             @endif
                             <div class="d-flex mt-4 justify-content-start gap-2">
-                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Tambah</button>
-                                <a href="{{ route('subjects.index') }}" class="btn btn-secondary"><i class="fa-solid fa-ban"></i>&nbsp;Batal</a>
+                                <button type="submit" class="btn btn-success" style="font-size: 0.9rem;"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Tambah</button>
+                                <a href="{{ route('subjects.index') }}" class="btn btn-secondary" style="font-size: 0.9rem;"><i class="fa-solid fa-ban"></i>&nbsp;Batal</a>
                             </div>
                         </form>
                     </div>

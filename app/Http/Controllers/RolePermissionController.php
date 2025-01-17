@@ -17,7 +17,7 @@ class RolePermissionController extends Controller
     public function indexRole()
     {
         $roles = Role::all();
-        return view('roles-permissions.roles.index', compact('roles'));
+        return view('users.roles.index', compact('roles'));
     }
 
     public function indexPermission()
@@ -34,7 +34,7 @@ class RolePermissionController extends Controller
         foreach($roles as $role) {
             $rolePermissions[$role->id] = $role->permissions->pluck('name')->toArray();
         }
-        return view('roles-permissions.permissions.index', compact('roles', 'permissions', 'rolePermissions'));
+        return view('users.permissions.index', compact('roles', 'permissions', 'rolePermissions'));
     }
 
     public function createRole(Request $request)
@@ -62,7 +62,7 @@ class RolePermissionController extends Controller
 
     public function deleteRole(Role $role)
     {
-        if (in_array($role->name, ['admin', 'guru', 'user'])) {
+        if (in_array($role->name, ['admin', 'guru', 'siswa'])) {
             return back()->with('error', 'Role default tidak dapat dihapus');
         }
         

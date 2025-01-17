@@ -6,7 +6,7 @@
         <x-breadcrumb :items="[
             ['name' => 'Home', 'url' => route('dashboard')],
             ['name' => 'Pengguna', 'url' => null],
-            ['name' => 'Atur Akun', 'url' => route('users.index')],
+            ['name' => 'Akun', 'url' => route('users.index')],
             ['name' => 'Edit', 'url' => null],
         ]" />
     </x-slot>
@@ -89,8 +89,8 @@
                             </div>
 
                             <div class="d-flex mt-4 justify-content-start gap-2">
-                                <button type="submit" class="btn btn-success" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
-                                <a href="{{ route('users.index') }}" class="btn btn-secondary"><i class="fa-solid fa-ban"></i>&nbsp;Batal</a>
+                                <button type="submit" class="btn btn-success" style="font-size: 0.9rem;" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
+                                <a href="{{ route('users.index') }}" class="btn btn-secondary" style="font-size: 0.9rem;"><i class="fa-solid fa-ban"></i>&nbsp;Batal</a>
                             </div>
                         </form>
                     </div>

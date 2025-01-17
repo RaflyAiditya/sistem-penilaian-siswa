@@ -1,7 +1,7 @@
 <x-navigation-layout title="Role">
 
     <x-slot name="header">
-        <h1 class="fs-5"><b>Role</b></h1>
+        <h1 class="fs-5"><b>Kelola Role</b></h1>
 
         <x-breadcrumb :items="[
             ['name' => 'Home', 'url' => route('dashboard')],
@@ -29,21 +29,21 @@
                     <div class="card-body mx-4 mt-3">
                         <header class="mb-4">
                             <h2 class="card-title fs-5 mb-2">
-                                {{ __('Atur Role') }}
+                                {{ __('Kelola Role') }}
                             </h2>
                             <p class="text-muted small">
-                                {{ __("Tambahkan role baru atau kelola role yang tersedia.") }}
+                                {{ __("Tambahkan role baru atau kelola role yang sudah ada") }}
                             </p>
                         </header>
 
                         <!-- Form Tambah Role -->
-                        <form action="{{ route('roles-permissions.createRole') }}" method="POST" class="mb-4">
+                        <form action="{{ route('users.createRole') }}" method="POST" class="mb-4">
                             @csrf
                             <div class="mb-3">
                                 <label for="roleName" class="form-label">Nama Role Baru</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="roleName" name="name" placeholder="Masukkan nama role" required>
-                                    <button type="submit" class="btn btn-primary">Tambah Role</button>
+                                    <button type="submit" class="btn btn-primary" style="font-size: 0.9rem;">Tambah Role</button>
                                 </div>
                             </div>
                         </form>
@@ -55,20 +55,20 @@
                         @forelse($roles as $role)
                             <div class="card mb-2">
                                 <div class="card-body p-3">
-                                    <form action="{{ route('roles-permissions.editRole') }}" method="POST" class="d-flex align-items-center justify-content-between mb-0">
+                                    <form action="{{ route('users.editRole') }}" method="POST" class="d-flex align-items-center justify-content-between mb-0">
                                         @csrf
                                         <input type="hidden" name="role_id" value="{{ $role->id }}">
                                         <div class="flex-grow-1 me-2">
-                                            <input type="text" class="form-control" name="name" value="{{ $role->name }}" required>
-                                        </div>
+                                            <input type="text" class="form-control" name="name" value="{{ $role->name }}" {{ in_array($role->name, ['admin', 'guru']) ? 'readonly' : '' }} required>                                        </div>
                                         <div class="d-flex gap-2">
+                                            {{-- @if($role->name !== 'admin') --}}
+                                            @if(!in_array($role->name, ['admin', 'guru']))
                                             <button type="submit" class="btn btn-sm btn-success">
-                                                <i class="fas fa-save"></i>
-                                            </button>
-                                            @if(!in_array($role->name, ['admin']))
-                                            <button type="button" class="btn btn-sm btn-danger delete-role" data-role-id="{{ $role->id }}" data-role-name="{{ $role->name }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                                    <i class="fas fa-save"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-danger delete-role" data-role-id="{{ $role->id }}" data-role-name="{{ $role->name }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                             @endif
                                         </div>
                                     </form>

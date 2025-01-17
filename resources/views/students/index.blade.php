@@ -15,10 +15,10 @@
             </script>
         @endif
 
-        <div class="card mt-4" data-page-id="students-page">
+        <div class="card my-4" data-page-id="students-page">
             <div class="card-header">
                 <ul class="nav justify-content-between mt-2">
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs mb-2" role="tablist">
                         @foreach (['7' => 'Kelas 7', '8' => 'Kelas 8', '9' => 'Kelas 9'] as $key => $label)
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link {{ $loop->first ? 'active' : '' }}" 
@@ -36,7 +36,7 @@
                     </ul>
                     
                     @can('mengelola siswa')
-                    <button class="btn btn-link mx-2 mb-2" style="padding: 0%">
+                    <button class="btn btn-link me-2 mb-2" style="padding: 0%">
                         <a href="{{ route('students.create') }}" class="btn btn-primary">
                             Tambah siswa
                         </a>
@@ -45,7 +45,7 @@
                 </ul>
             </div>
 
-            <div class="card-body">
+            <div class="card-body py-3">
                 <div class="tab-content" id="myTabContent">
                     @foreach (['7' => 'Kelas 7', '8' => 'Kelas 8', '9' => 'Kelas 9'] as $key => $label)
                         <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" 
@@ -54,8 +54,10 @@
                             aria-labelledby="kelas-{{ $key }}-tab" 
                             tabindex="0">
                             @if ($studentsByClass[$key]->isNotEmpty())
-                                <div class="table-responsive-lg">
-                                    @include('students.table', ['students' => $studentsByClass[$key]])
+                                <div class="card shadow-sm p-1">
+                                    <div class="table-responsive-xl">
+                                        @include('students.table', ['students' => $studentsByClass[$key]])
+                                    </div>
                                 </div>
                             @else
                                 <p class="text-center">Tidak ada siswa untuk {{ $label }}.</p>
